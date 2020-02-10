@@ -1,0 +1,84 @@
+$height-draw-area: 600px;
+
+.lecture {
+  display: flex;
+
+  .icon-img {
+    height: 28px;
+  }
+
+  .lecture-menu {
+    width: 70px;
+    border-right: 1px solid #dee2e6;
+
+    .menu-item {
+      text-align: center;
+      margin: 8px 0;
+    }
+  }
+
+  .editor {
+    flex-basis: 100%;
+
+    .draw-area {
+      display: flex;
+      height: $height-draw-area;
+
+
+
+      .element-list {
+        width: 110px;
+        overflow-y: scroll;
+        background-color: #dedede;
+
+        ul {
+          margin-left: 0;
+          padding-left: 0;
+
+          li {
+            list-style-type: none;
+          }
+        }
+      }
+
+      .circuit {
+        display: flex;
+        flex-basis: 100%;
+        background-color: #3c4858;
+
+        .circuit-svg {
+          flex-basis: 100%;
+        }
+      }
+
+      .form {
+        width: 200px;
+        overflow-y: scroll;
+        background-color: #dedede;
+      }
+    }
+
+    .control {
+      display: flex;
+      height: 36px;
+
+      .section {
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+        border-right: 1px solid #dee2e6;
+
+        .icon-img {
+          padding: 3px 0;
+          margin: 0 8px;
+        }
+      }
+    }
+  }
+}
+
+.lecture-text {
+  display: block;
+  width: 100%;
+  padding: 0 15px;
+}

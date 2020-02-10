@@ -1,0 +1,16 @@
+.widget {
+    transition: all 0.3s;
+}
+
+.widget-title {
+    font-size: 18px;
+}
+
+.text-success {
+    color: #2eca8b
+}
+
+.widget:hover {
+    cursor: pointer;
+    color: #2f55d4;
+}

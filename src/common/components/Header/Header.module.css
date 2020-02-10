@@ -1,0 +1,30 @@
+.headerMain {
+    height: 55px;
+    width: 100%;
+    margin:0px auto;
+}
+
+.header {
+    position: fixed;
+    display: flex;
+    height: 55px;
+    width: 100%;
+    align-items: center;
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #dee2e6;
+    z-index: 100;
+}
+
+.logo {
+    padding-left: 15px;
+    margin: 0;
+}
+
+.basis {
+    flex-basis: 100%;
+}
+
+.signIn {
+    padding-right: 15px;
+    margin: 0;
+}

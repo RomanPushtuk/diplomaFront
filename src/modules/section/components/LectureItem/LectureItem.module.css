@@ -1,0 +1,11 @@
+.item {
+    color: #6c757d;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.text {
+    line-height: 1.5;
+    font-weight: 600;
+    transition: all 0.3s;
+}

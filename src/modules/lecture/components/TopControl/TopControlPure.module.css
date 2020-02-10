@@ -1,0 +1,26 @@
+.control {
+    display: flex;
+    height: 36px;
+}
+
+.section {
+    display: flex;
+    align-items: stretch;
+    border-right: 1px solid #dee2e6;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    transition: all 0.3s;
+}
+
+.icon-img {
+    height: 24px;
+}
+
+.item:hover {
+    cursor: pointer;
+    background-color: #f2f2f2;
+}

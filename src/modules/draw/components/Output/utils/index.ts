@@ -1,0 +1,1 @@
+export { getStringСircuit } from "./getStringСircuit";

@@ -1,0 +1,18 @@
+.item {
+    text-align: center;
+    padding: 8px 0;
+    transition: all 0.3s;
+}
+
+.selected {
+    background-color: #f2f2f2;
+}
+
+.item-img {
+    height: 28px;
+}
+
+.item:hover {
+    cursor: pointer;
+    background-color: #f2f2f2;
+}

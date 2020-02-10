@@ -1,0 +1,1 @@
+export { getBreadCrumbs } from "./getBreadCrumbs";
