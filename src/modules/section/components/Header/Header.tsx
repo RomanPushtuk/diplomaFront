@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
-import { BreadCrumbs } from "../BreadCrumbs";
 
 interface Props {
   title: string;
   description: string;
-  history: any;
 }
 
 export class Header extends Component<Props> {
   render() {
-    const { title, description, history } = this.props;
+    const { title, description } = this.props;
 
     return (
       <section className="bg-half bg-light">

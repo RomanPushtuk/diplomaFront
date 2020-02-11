@@ -1,5 +1,4 @@
 import React, { PureComponent, MouseEvent, createRef } from "react";
-import { generateUniqueId } from "../../../../common/utils";
 
 export class Output extends PureComponent<any> {
   constructor(props: any) {

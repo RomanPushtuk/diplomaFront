@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { match } from "react-router-dom";
-import { ILecture } from "../section/interfaces";
+import { ILecture } from "../../common/interfaces";
 import { Menu } from "./components/Menu";
 import { Lecture } from "./components/Lecture";
 import { Editor } from "./components/Editor";

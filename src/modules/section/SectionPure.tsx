@@ -2,44 +2,48 @@ import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import { match } from "react-router-dom";
 import { Sidebar, HeaderSection, ThemeList, Theme } from "./components";
-import { ISection, ITheme } from "./interfaces";
 import { Footer } from "../../common/components/Footer";
 import shapeDark from "../../images/shapes/shape-dark.png";
+import { ISection, ITheme } from "../../common/interfaces";
 
 interface Props {
   match: match<any>;
-  history: any;
   getSection: (id: number) => void;
-  addTheme: (theme: ITheme) => void;
   section: ISection;
-  theme: ITheme;
 }
 
-export class SectionPure extends Component<Props> {
-  componentDidMount = () => {
-    // const { match, getSection } = this.props;
-    // const id = Number(match.params.sectionId);
-    //
-    // getSection(id);
+interface State {
+  theme: ITheme | null;
+}
+
+export class SectionPure extends Component<Props, State> {
+  state = {
+    theme: null
   };
 
-  handleSelectTheme = (theme: ITheme) => {
-    const { addTheme } = this.props;
+  componentDidMount = () => {
+    const { match, getSection } = this.props;
+    const id = Number(match.params.sectionId);
 
-    addTheme(theme);
+    getSection(id);
+  };
+
+  handleSelectTheme = (idTheme: number) => {
+    this.props.section.themes.forEach((theme: any) => {
+      if (theme.id === idTheme) {
+        this.setState({ theme });
+      }
+    });
   };
 
   render() {
-    const { section, theme, history } = this.props;
+    const { section } = this.props;
     const { title, description, themes } = section;
+    const theme = this.state.theme || themes[0];
 
     return (
       <>
-        <HeaderSection
-          title={title}
-          description={description}
-          history={history}
-        />
+        <HeaderSection title={title} description={description} />
         <section className="section">
           <div className="container">
             <Row>

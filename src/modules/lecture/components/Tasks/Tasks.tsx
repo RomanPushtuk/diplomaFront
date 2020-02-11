@@ -9,7 +9,7 @@ export class Tasks extends Component<Props> {
     return (
       <div className="p-4 pt-2 container">
         <div className="">
-          <h3>Задания </h3>
+          <h4 className="page-title">Задания </h4>
           <ul>
             {this.props.tasks.map((task, index) => (
               <li key={index}>{task}</li>

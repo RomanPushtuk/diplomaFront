@@ -1,9 +1,6 @@
 import { Dispatch } from "redux";
-import {
-  saveByLocalStorage,
-  getUserProfile,
-  getToken
-} from "../../../common/servises";
+import { saveByLocalStorage } from "../../../common/servises";
+import { getToken, getUserProfile } from "../servises";
 
 export const signIn = (data: any): any => (dispath: Dispatch) => {
   return getToken(data)

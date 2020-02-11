@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { ThemeItem } from "../ThemeItem";
-import { ITheme } from "../../interfaces";
+import { ITheme } from "../../../../common/interfaces";
 
 interface Props {
   themes: Array<ITheme>;
-  onSelect: (theme: ITheme) => void;
+  onSelect: (idTheme: number) => void;
 }
 
 export class ThemeList extends Component<Props> {

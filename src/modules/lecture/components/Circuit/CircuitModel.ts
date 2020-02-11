@@ -78,6 +78,27 @@ export class CircuitModel implements ICircuitModel {
     output2.connections.push(output1);
   }
 
+  getStringShape() {
+    const connections: Array<string> = [];
+
+    Object.keys(this.circuit).forEach(idElement => {
+      const { type, params, outputs } = this.circuit[idElement];
+
+      Object.keys(outputs).forEach(idOutput => {
+        outputs[idOutput].connections.forEach((output: any) => {
+          const element = this.getElementByOutputId(output.id);
+          const connect = `${type}${JSON.stringify(params)}.${idOutput}=${
+            element.type
+          }${JSON.stringify(element.params)}.${output.id}`;
+
+          connections.push(connect);
+        });
+      });
+    });
+
+    return connections;
+  }
+
   /* Изменяем позицию на схеме */
   changePosition(id: string, coord: ICoord) {
     const element = this.circuit[id];
@@ -106,6 +127,26 @@ export class CircuitModel implements ICircuitModel {
     });
 
     return connections;
+  }
+
+  getElementByOutputId(idOutput: string): any {
+    let element = {};
+
+    Object.keys(this.circuit).forEach(idElement => {
+      const { outputs } = this.circuit[idElement];
+
+      Object.keys(outputs).forEach(idOutputSearch => {
+        if (idOutputSearch === idOutput) {
+          element = this.circuit[idElement];
+        }
+      });
+    });
+
+    return element;
+  }
+
+  getElementById(idElement: string) {
+    return this.circuit[idElement];
   }
 
   getOutput(id: string) {

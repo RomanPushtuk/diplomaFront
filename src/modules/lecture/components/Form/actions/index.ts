@@ -1,1 +1,1 @@
-export { changeProperty } from "./changeProperty";
+export { changeParams } from "./changeParams";

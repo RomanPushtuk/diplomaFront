@@ -1,4 +1,4 @@
-import { IComment } from "../../../common/interfaces";
+import { IComment } from "./IComment";
 
 export interface ILecture {
   id: number;
@@ -6,6 +6,6 @@ export interface ILecture {
   description: string;
   text: string;
   tasks: Array<string>;
-  answer: Object;
+  answer: string;
   comments: Array<IComment>;
 }

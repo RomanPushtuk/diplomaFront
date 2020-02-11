@@ -1,4 +1,3 @@
-export { BreadCrumbs } from "./BreadCrumbs";
 export { Header as HeaderSection } from "./Header";
 export { LectureItem } from "./LectureItem";
 export { LectureList } from "./LectureList";

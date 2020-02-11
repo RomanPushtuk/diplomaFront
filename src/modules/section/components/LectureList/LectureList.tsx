@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { LectureItem } from "../LectureItem";
-import { ILecture } from "../../interfaces";
+import { ILecture } from "../../../../common/interfaces";
 
 interface Props {
   lectures: Array<ILecture>;

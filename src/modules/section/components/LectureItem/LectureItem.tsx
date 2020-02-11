@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
-import { ILecture } from "../../interfaces";
+import { ILecture } from "../../../../common/interfaces";
 import styles from "./LectureItem.module.css";
 
 const cn = classNames.bind(styles);

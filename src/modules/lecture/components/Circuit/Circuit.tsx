@@ -1,26 +1,19 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { addToForm } from "../../services";
 import { CircuitPure } from "./CircuitPure";
-import { addElement, addToBuffer } from "./actions";
 
-interface StateProps {
-  buffer: any;
-}
+interface StateProps {}
 
 interface DispatchProps {
-  addElement: (element: any) => void;
-  addToBuffer: (data: any) => void;
-  clearBuffer: () => any;
+  addToForm: (idElement: string, params: any) => any;
 }
 
-const mapStateToProps = (state: any): StateProps => ({
-  buffer: state.buffer
-});
+const mapStateToProps = (state: any): StateProps => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  addElement: (element: Element) => dispatch(addElement(element)),
-  clearBuffer: () => dispatch({ type: "CLEAR_BUFFER" }),
-  addToBuffer: (data: any) => dispatch(addToBuffer(data))
+  addToForm: (idElement: string, params: any) =>
+    dispatch(addToForm(idElement, params))
 });
 
 export const Circuit = connect<StateProps, DispatchProps, any>(

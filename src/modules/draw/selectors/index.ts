@@ -1,1 +1,0 @@
-export { getBuffer } from "./getBuffer";

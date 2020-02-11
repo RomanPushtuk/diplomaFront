@@ -1,1 +1,2 @@
-export { createOutputs } from "./createOutputs";
+export { createOutputsModels } from "./createOutputsModels";
+export { getCoord } from "./getCoord";

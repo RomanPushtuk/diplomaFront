@@ -1,9 +1,9 @@
 import { MouseEvent } from "react";
-import { CircuitPure } from "../CircuitPure";
-import { ICoord } from "../../../../../common/interfaces";
+import { Circuit } from "../components/Circuit";
+import { ICoord } from "../../../common/interfaces";
 
 export function getCoord(event: MouseEvent<any>, step: number = 1): ICoord {
-  const CIRCUIT_COORD_RECT = CircuitPure.getCircuitBounding();
+  const CIRCUIT_COORD_RECT = Circuit.getCircuitBounding();
 
   if (CIRCUIT_COORD_RECT) {
     const x = event.clientX - CIRCUIT_COORD_RECT.left;

@@ -1,21 +1,16 @@
-import {ICoord} from "../../../common/interfaces";
-import { generateUniqueId } from "../../../common/utils";
-import { createOutputs } from "../utils";
+import { ElementModel } from "./ElementModel";
+import { createOutputsModels } from "../utils";
 
-export class ResistorModel {
-    private id: string = generateUniqueId();
+export class ResistorModel extends ElementModel {
+  readonly type: string = "resistor";
 
-    private type: string = "resistor";
+  readonly outputs: { [k: string]: any } = createOutputsModels(2);
 
-    private coord: ICoord = { x: 0, y: 0 };
+  readonly params: { [key: string]: any } = {
+    resist: 0
+  };
 
-    private outputs: { [k: string]: any } = createOutputs(2);
-
-    setCoord(coord: ICoord) {
-        this.coord = coord;
-    }
-
-    getId(id: string) {
-        return this.id;
-    }
+  setParam(name: string, value: number) {
+    this.params[name] = value;
+  }
 }

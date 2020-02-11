@@ -5,5 +5,4 @@ export interface ITheme {
   title: string;
   description: string;
   lectures: Array<ILecture>;
-  progress?: string;
 }

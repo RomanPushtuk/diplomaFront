@@ -1,14 +1,14 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { FormPure } from "./FormPure";
-import { changeProperty } from "./actions";
+import { changeParams } from "./actions";
 
 interface StateProps {
   form: any;
 }
 
 interface DispatchProps {
-  changeProperty: (id: string, name: string, value: string | number) => void;
+  changeParams: (params: any) => void;
 }
 
 const mapStateToProps = (state: any): StateProps => ({
@@ -16,8 +16,7 @@ const mapStateToProps = (state: any): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  changeProperty: (id: string, name: string, value: string | number) =>
-    dispatch(changeProperty(id, name, value))
+  changeParams: (params: any) => dispatch(changeParams(params))
 });
 
 export const Form = connect<StateProps, DispatchProps, any>(

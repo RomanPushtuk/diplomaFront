@@ -1,6 +1,6 @@
 import { generateUniqueId } from "../../../common/utils";
 
-export function createOutputs(count: number): { [k: string]: any } {
+export function createOutputsModels(count: number): { [k: string]: any } {
   const map: { [k: string]: any } = {};
 
   for (let i = 0; i < count; i++) {

@@ -1,5 +1,6 @@
 const themes = [
   {
+    id: 1,
     title: "Тема 1",
     description: "Описание для темы 1",
     lectures: [
@@ -22,6 +23,7 @@ const themes = [
     ]
   },
   {
+    id: 2,
     title: "Тема 2",
     description: "Описание для темы 2",
     lectures: [
@@ -44,6 +46,7 @@ const themes = [
     ]
   },
   {
+    id: 3,
     title: "Тема 3",
     description: "Описание для темы 1",
     lectures: [
@@ -76,15 +79,10 @@ const initialState: any = {
   currentTheme: themes[0]
 };
 
-export function sectionReducer(
-  state = initialState,
-  { type, section, theme }: any
-) {
+export function sectionReducer(state = initialState, { type, section }: any) {
   switch (type) {
     case "ADD_SECTION":
       return { ...section };
-    case "ADD_THEME":
-      return { ...state, ...(state.currentTheme = { ...theme }) };
     default:
       return state;
   }

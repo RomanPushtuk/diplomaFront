@@ -21,7 +21,6 @@ export class PostBoxPure extends Component<Props, State> {
   handleClick = (event: MouseEvent<any>) => {
     event.preventDefault();
     this.props.addComment(1, {
-      id: 4,
       author: "Новый автор",
       date: "Новая дата",
       text: this.state.text

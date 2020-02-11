@@ -1,8 +1,8 @@
-import { CircuitPure } from "../../lecture/components/Circuit/CircuitPure";
+import { Circuit } from "../../lecture/components/Circuit";
 import { ICoord } from "../../../common/interfaces";
 
 export function getCenter(element: HTMLElement): ICoord {
-  const scheme = CircuitPure.getCircuitBounding();
+  const scheme = Circuit.getCircuitBounding();
   const bounding = element.getBoundingClientRect();
 
   if (scheme && scheme.left && scheme.top) {
