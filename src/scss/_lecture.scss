@@ -19,12 +19,12 @@ $height-draw-area: 600px;
 
   .editor {
     flex-basis: 100%;
+    align-items: stretch;
 
     .draw-area {
       display: flex;
-      height: $height-draw-area;
-
-
+      height: calc(100vh - 127px);
+      align-items: stretch;
 
       .element-list {
         width: 110px;

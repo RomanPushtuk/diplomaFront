@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { TopControl } from "../TopControl";
 import { BottomControl } from "../BottomControl";
 import { ElementList } from "../ElementList";
-import { Circuit } from "../Circuit";
+import { Circuit, CircuitModel } from "../Circuit";
 import { Form } from "../Form";
 
 function checkAnswer(ans1: Array<string>, ans2: Array<string>): boolean {
@@ -22,6 +22,8 @@ function checkAnswer(ans1: Array<string>, ans2: Array<string>): boolean {
   }
   return false;
 }
+
+const circiutModel = new CircuitModel();
 
 interface Props {
   answer: string;
@@ -46,13 +48,7 @@ export class EditorPure extends Component<Props, State> {
   render() {
     return (
       <div className="editor">
-        <TopControl />
-        <div className="draw-area">
-          <ElementList />
-          <Circuit onChange={this.handleChange} />
-          <Form />
-        </div>
-        <BottomControl isSolved={this.state.isSolved} />
+        <Circuit onChange={this.handleChange} />
       </div>
     );
   }

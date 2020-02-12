@@ -43,6 +43,7 @@ export const Resistor = (
             <Output1
               startDrawingLine={startDrawingLine}
               connectOutputs={connectOutputs}
+              type="output1"
               cx={13}
               cy={10}
               r={10}
@@ -58,12 +59,13 @@ export const Resistor = (
             <Output2
               startDrawingLine={startDrawingLine}
               connectOutputs={connectOutputs}
+              type="output2"
               cx={13}
               cy={45}
               r={10}
               fill="red"
             />
-          </svg>
+          </svg>s
         </g>
       );
     }

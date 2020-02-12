@@ -8,11 +8,12 @@ import zoom from "../../img/zoom-in.svg";
 
 const cn = classNames.bind(styles);
 
-export class TopControl extends Component<any, any> {
-  handleBack = () => {};
+interface Props {
+  undo: () => void;
+  turn: () => void;
+}
 
-  handleForward = () => {};
-
+export class TopControl extends Component<Props, any> {
   handleChangeZoom = () => {};
 
   render() {
@@ -23,7 +24,7 @@ export class TopControl extends Component<any, any> {
             <img
               className={cn("icon-img")}
               alt="back-arrow"
-              onClick={this.handleBack}
+              onClick={this.props.undo}
               src={back}
             />
           </div>
@@ -31,7 +32,7 @@ export class TopControl extends Component<any, any> {
             <img
               className={cn("icon-img")}
               alt="next-arrow"
-              onClick={this.handleForward}
+              onClick={this.props.turn}
               src={forward}
             />
           </div>

@@ -6,14 +6,14 @@ import { CircuitPure } from "./CircuitPure";
 interface StateProps {}
 
 interface DispatchProps {
-  addToForm: (idElement: string, params: any) => any;
+  addToForm: (idElement: string, name: string, params: any) => any;
 }
 
 const mapStateToProps = (state: any): StateProps => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  addToForm: (idElement: string, params: any) =>
-    dispatch(addToForm(idElement, params))
+  addToForm: (idElement: string, name: string, params: any) =>
+    dispatch(addToForm(idElement, name, params))
 });
 
 export const Circuit = connect<StateProps, DispatchProps, any>(

@@ -5,17 +5,18 @@ import { CircuitModel } from "../../lecture/components/Circuit/CircuitModel";
 const circuitModel = new CircuitModel();
 
 export function createOutputs(outputs: { [k: string]: Array<string> }): any {
-  return Object.keys(outputs).map((outputsId: string) => {
+  return Object.keys(outputs).map((outputId: string, index: number) => {
     return class Output extends PureComponent<any> {
       constructor(props: any) {
         super(props);
-        this.id = outputsId;
+        this.id = outputId;
       }
 
       componentDidMount(): void {
         const coord = getCenter(this.outputRef.current);
 
         circuitModel.setCoordOutput(this.id, coord);
+        circuitModel.setTypeOutput(this.id, this.props.type);
       }
 
       handleMouseDown = (event: MouseEvent<any>) => {

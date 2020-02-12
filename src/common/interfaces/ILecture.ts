@@ -4,8 +4,8 @@ export interface ILecture {
   id: number;
   title: string;
   description: string;
-  text: string;
+  lectureContent: string;
   tasks: Array<string>;
-  answer: string;
+  solution: string;
   comments: Array<IComment>;
 }

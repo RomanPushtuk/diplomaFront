@@ -1,184 +1,259 @@
 import React, { PureComponent, DragEvent, MouseEvent, RefObject } from "react";
-import { MODELS } from "../../models";
 import { ICoord, IElement } from "../../../../common/interfaces";
 import { Line, Rect } from "../../../draw";
 import { Elements } from "../Elements";
 import { Lines } from "../Lines";
-import { getCoord } from "../../utils";
+import { getCoord, factoryModels } from "../../utils";
+import { Pull } from "../ Pull";
 import { CircuitModel } from "./CircuitModel";
+import { TopControl } from "../TopControl";
+import { BottomControl } from "../BottomControl";
+import { ElementList } from "../ElementList";
+import { Form } from "../Form";
 
 interface State {
-    startCoord: ICoord | null;
-    endCoord: ICoord | null;
-    circuit: { [k: string]: any };
+  startCoord: ICoord | null;
+  endCoord: ICoord | null;
+  circuit: { [k: string]: any };
+  widthForm: number;
+  widthElements: number;
 }
 
 interface Props {
-    addToForm: (idElement: string, params: any) => void;
+  addToForm: (idElement: string, name: string, params: any) => void;
+  circuit: any;
 }
 
 const circuitModel = new CircuitModel();
 
 export class CircuitPure extends PureComponent<Props, State> {
-    state = {
-        startCoord: null,
-        endCoord: null,
-        circuit: {}
-    };
+  state = {
+    startCoord: null,
+    endCoord: null,
+    widthForm: 210,
+    widthElements: 105,
+    circuit: {}
+  };
 
-    // Нужен для определения координат мыши
-    static getCircuitBounding() {
-        const { current } = this.circuitRef;
+  // Нужен для определения координат мыши
+  static getCircuitBounding() {
+    const { current } = this.circuitRef;
 
-        if (current) return current.getBoundingClientRect();
-        return null;
+    if (current) return current.getBoundingClientRect();
+    return null;
+  }
+
+  componentDidMount(): void {
+    this.setState({ circuit: { ...circuitModel.getCircuit() } });
+  }
+
+  /* Все действия в грачическом редакторе завязаны на этом методе,
+   * в зависимости от типа события в this.action мы выполняем действия */
+  handleMouseMove = (event: MouseEvent<any>) => {
+    const coord = getCoord(event);
+
+    if (this.action) {
+      const { type, id, startCoord } = this.action;
+
+      switch (type) {
+        case "DRAGGING":
+          return this.changePosition(id, coord); // Меняем координаты элемента
+
+        case "CONNECTING":
+          return this.drawLine(startCoord, coord); // Рисуем линию для соединения
+
+        case "SELECTING":
+          return this.drawRect(startCoord, coord); // Рисуем прямоугольник выделения
+
+        default:
+          return null;
+      }
     }
 
-    /* Все действия в грачическом редакторе завязаны на этом методе,
-     * в зависимости от типа события в this.action мы выполняем действия */
-    handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
-        const coord = getCoord(event);
+    return null;
+  };
 
-        if (this.action) {
-            const { type, id, startCoord } = this.action;
+  /* К нам прилетел элемент */
+  handleDrop = (event: DragEvent<any>) => {
+    const elementType = event.dataTransfer.getData("text");
+    const element = factoryModels(elementType);
+    const coord = getCoord(event);
 
-            switch (type) {
-                case "DRAGGING":
-                    return this.changePosition(id, coord); // Меняем координаты элемента
+    element.setCoord(coord);
+    const count = circuitModel.getCountElementType(elementType) + 1;
 
-                case "CONNECTING":
-                    return this.drawLine(startCoord, coord); // Рисуем линию для соединения
+    element.setName(`${elementType}${count}`);
+    this.eddElement(element);
+  };
 
-                case "SELECTING":
-                    return this.drawRect(startCoord, coord); // Рисуем прямоугольник выделения
+  connectOutputs = (id: string) => {
+    const output1 = circuitModel.getOutput(id);
+    const output2 = circuitModel.getOutput(this.action.id);
 
-                default:
-                    return null;
-            }
-        }
+    circuitModel.connectOutputs(output1, output2);
+    console.log(circuitModel.getStringShape());
+    this.setState({ circuit: circuitModel.getCircuit() });
+  };
 
-        return null;
+  /* Начинаем перетаскивание элемента и добавляем информацию об элементе в форму */
+  startDragging = (id: string) => {
+    const { addToForm } = this.props;
+
+    this.action = {
+      type: "DRAGGING",
+      id
     };
 
-    /* К нам прилетел элемент */
-    handleDrop = (event: DragEvent<HTMLDivElement>) => {
-        const elementType = event.dataTransfer.getData("text");
-        const ModelConstructor = MODELS[elementType]; // Получаем нужный нам конструктор
-        const element = new ModelConstructor();
-        const coord = getCoord(event);
+    const element = circuitModel.getElementById(id);
 
-        element.setCoord(coord);
-        this.eddElement(element);
+    addToForm(id, element.name, element.params);
+  };
+
+  /* Начинаем отрисовку соединяющей линии */
+  startDrawingLine = (event: MouseEvent<any>, id: string) => {
+    const startCoord = getCoord(event);
+
+    this.action = {
+      type: "CONNECTING",
+      startCoord,
+      id
     };
+  };
 
-    connectOutputs = (id: string) => {
-        const output1 = circuitModel.getOutput(id);
-        const output2 = circuitModel.getOutput(this.action.id);
+  /* Начинаем отрисовку выделенной области */
+  startDrawingRect = (event: MouseEvent<any>) => {
+    const startCoord = getCoord(event);
 
-        circuitModel.connectOutputs(output1, output2);
-        console.log(circuitModel.getStringShape());
-        this.setState({ circuit: circuitModel.getCircuit() });
+    this.action = {
+      type: "SELECTING",
+      startCoord
     };
+  };
 
-    /* Начинаем перетаскивание элемента и добавляем информацию об элементе в форму*/
-    startDragging = (id: string) => {
-        const { addToForm} = this.props;
+  /* Завершаем вышеперечисленные действия */
+  clearAction = () => {
+    this.action = null;
+    this.setState({ startCoord: null, endCoord: null });
+  };
 
-        this.action = {
-            type: "DRAGGING",
-            id
-        };
+  /* Отрисовываем линию которая соединяет два элемента */
+  drawLine(startCoord: ICoord, endCoord: ICoord) {
+    this.setState({ startCoord, endCoord });
+  }
 
-        console.log("startDragging");
-        const element = circuitModel.getElementById(id);
-        addToForm(id, element.params)
-    };
+  /* Отрисовываем область когда производим выделение */
+  drawRect(startCoord: ICoord, endCoord: ICoord) {
+    this.setState({ startCoord, endCoord });
+  }
 
-    /* Начинаем отрисовку соединяющей линии */
-    startDrawingLine = (event: MouseEvent<any>, id: string) => {
-        const startCoord = getCoord(event);
+  /* Добавляем элемент в схему */
+  eddElement(element: IElement) {
+    circuitModel.eddElement(element);
+    const newCircuit = circuitModel.getCircuit();
 
-        this.action = {
-            type: "CONNECTING",
-            startCoord,
-            id
-        };
-    };
+    this.setState({ circuit: newCircuit }); // Перерендер с новыми данными
+  }
 
-    /* Начинаем отрисовку выделенной области */
-    startDrawingRect = (event: MouseEvent<HTMLDivElement>) => {
-        const startCoord = getCoord(event);
+  undo = () => {
+    const popCircuit = circuitModel.popCircuit();
 
-        this.action = {
-            type: "SELECTING",
-            startCoord
-        };
-    };
+    circuitModel.setCircuit(popCircuit);
+    this.setState({ circuit: popCircuit });
+  };
 
-    /* Завершаем вышеперечисленные действия */
-    clearAction = () => {
-        this.action = null;
-        this.setState({ startCoord: null, endCoord: null });
-    };
+  turn = () => {
+    const turnCircuit = circuitModel.turnCircuit();
 
-    /* Отрисовываем линию которая соединяет два элемента */
-    drawLine(startCoord: ICoord, endCoord: ICoord) {
-        this.setState({ startCoord, endCoord });
+    circuitModel.setCircuit(turnCircuit);
+    this.setState({ circuit: turnCircuit });
+  };
+
+  /* Изменяем позиция на схеме */
+  changePosition = (id: string, coord: ICoord) => {
+    circuitModel.changePosition(id, coord);
+    const newCircuit = circuitModel.getCircuit();
+
+    circuitModel.setCircuit(newCircuit);
+    this.setState({ circuit: newCircuit }); // Перерендер с новыми данными
+  };
+
+  handlePullDrag = (event: MouseEvent<any>) => {
+    const x = event.clientX - 38;
+
+    if (this.pullType === "form") {
+      this.setState({ widthForm: -x });
     }
-
-    /* Отрисовываем область когда производим выделение */
-    drawRect(startCoord: ICoord, endCoord: ICoord) {
-        this.setState({ startCoord, endCoord });
+    if (this.pullType === "elements") {
+      this.setState({ widthElements: x });
     }
+  };
 
-    /* Добавляем элемент в схему */
-    eddElement(element: IElement) {
-        circuitModel.eddElement(element);
-        const newCircuit = circuitModel.getCircuit();
+  finishPullDrag = (event: MouseEvent<any>) => {
+    this.pullType = "";
+  };
 
-        this.setState({ circuit: newCircuit }); // Перерендер с новыми данными
-    }
+  startPull = (type: string) => {
+    this.pullType = type;
+  };
 
-    /* Изменяем позиция на схеме */
-    changePosition = (id: string, coord: ICoord) => {
-        circuitModel.changePosition(id, coord);
-        const newCircuit = circuitModel.getCircuit();
+  pullType: string = "";
 
-        this.setState({ circuit: newCircuit }); // Перерендер с новыми данными
-    };
+  action: any = null;
 
-    private action: any = null;
+  static circuitRef: RefObject<any> = React.createRef();
 
-    static circuitRef: RefObject<HTMLDivElement> = React.createRef();
+  render() {
+    const {
+      startCoord,
+      endCoord,
+      widthForm,
+      widthElements,
+      circuit
+    } = this.state;
 
-    render() {
-        const { startCoord, endCoord, circuit } = this.state;
+    const isConnecting = !!(this.action && this.action.type === "CONNECTING");
+    const isSelecting = !!(this.action && this.action.type === "SELECTING");
 
-        const isConnecting = !!(this.action && this.action.type === "CONNECTING");
-        const isSelecting = !!(this.action && this.action.type === "SELECTING");
-
-        return (
-            <div
-                onDrop={this.handleDrop}
-                onMouseMove={this.handleMouseMove}
-                onMouseDown={this.startDrawingRect}
-                onMouseUp={this.clearAction}
-                onDragOver={e => e.preventDefault()}
-                ref={CircuitPure.circuitRef}
-                className="circuit"
-            >
-                <svg className="circuit-svg">
-                    {isConnecting && <Line startCoord={startCoord} endCoord={endCoord} />}
-                    {isSelecting && <Rect startCoord={startCoord} endCoord={endCoord} />}
-                    <Elements
-                        circuit={circuit}
-                        startDragging={this.startDragging}
-                        startDrawingLine={this.startDrawingLine}
-                        connectOutputs={this.connectOutputs}
-                    />
-                    <Lines connects={circuitModel.getConnections()} />
-                </svg>
-            </div>
-        );
-    }
+    return (
+      <div>
+        <TopControl undo={this.undo} turn={this.turn} />
+        <div
+          onMouseMove={this.handlePullDrag}
+          onMouseUp={this.finishPullDrag}
+          className="draw-area"
+        >
+          <ElementList width={widthElements} />
+          <Pull type="elements" puller={this.startPull} />
+          <svg
+            onDrop={this.handleDrop}
+            onMouseMove={this.handleMouseMove}
+            onMouseDown={this.startDrawingRect}
+            onMouseUp={this.clearAction}
+            onDragOver={e => e.preventDefault()}
+            ref={CircuitPure.circuitRef}
+            className="circuit-svg circuit"
+          >
+            {isConnecting && (
+              <Line startCoord={startCoord} endCoord={endCoord} />
+            )}
+            {isSelecting && (
+              <Rect startCoord={startCoord} endCoord={endCoord} />
+            )}
+            {!!circuit && (
+              <Elements
+                circuit={circuit}
+                startDragging={this.startDragging}
+                startDrawingLine={this.startDrawingLine}
+                connectOutputs={this.connectOutputs}
+              />
+            )}
+            <Lines connects={circuitModel.getConnections()} />
+          </svg>
+          <Pull type="form" puller={this.startPull} />
+          <Form width={widthForm} />
+        </div>
+        <BottomControl isSolved />
+      </div>
+    );
+  }
 }

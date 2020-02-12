@@ -35,13 +35,19 @@ export class LecturePure extends Component<Props, State> {
 
   render() {
     const { modalContent } = this.state;
-    const { id, tasks, text, answer, comments } = this.props.lecture;
+    const {
+      id,
+      tasks,
+      lectureContent,
+      solution,
+      comments
+    } = this.props.lecture;
 
     return (
       <div className="lecture">
         <Menu onSelect={this.handleSelect} />
-        {modalContent === "editor" && <Editor answer={answer} />}
-        {modalContent === "lecture" && <Lecture text={text} />}
+        {modalContent === "editor" && <Editor answer={solution} />}
+        {modalContent === "lecture" && <Lecture text={lectureContent} />}
         {modalContent === "tasks" && <Tasks tasks={tasks} />}
         {modalContent === "chat" && <Chat idLecture={id} comments={comments} />}
       </div>

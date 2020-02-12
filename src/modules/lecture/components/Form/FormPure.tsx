@@ -3,6 +3,7 @@ import { CircuitModel } from "../Circuit/CircuitModel";
 
 interface Props {
   form: any;
+  width: number;
   changeParams: (params: any) => void;
 }
 
@@ -37,10 +38,13 @@ export class FormPure extends Component<Props> {
   };
 
   render() {
-    const { params } = this.props.form;
+    const { params, name } = this.props.form;
 
     return (
-      <div className="form">{Object.keys(params).map(this.renderField)}</div>
+      <div className="form" style={{ minWidth: this.props.width }}>
+        <h5>{name}</h5>
+        {Object.keys(params).map(this.renderField)}
+      </div>
     );
   }
 }

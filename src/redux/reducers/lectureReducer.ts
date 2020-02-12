@@ -4,9 +4,9 @@ const initialState: ILecture = {
   id: 0,
   title: "Лекция1",
   description: "Описание лекции1",
-  text: "Текск для лекции 1",
+  lectureContent: "Текск для лекции 1",
   tasks: ["Задача 1", "Задача 2"],
-  answer: "{}",
+  solution: "{}",
   comments: [
     {
       id: 1,

@@ -1,0 +1,9 @@
+.pull {
+    width: 9px;
+    background-color: deepskyblue;
+    flex-direction: column;
+}
+
+.pull:hover {
+    cursor: move;
+}

@@ -19,14 +19,18 @@ const elements = [
   }
 ];
 
-export class ElementList extends Component {
+interface Props {
+  width: number;
+}
+
+export class ElementList extends Component<Props> {
   handleDragStart = (event: any, elementType: string) => {
     event.dataTransfer.setData("text", elementType);
   };
 
   render() {
     return (
-      <div className="element-list">
+      <div className="element-list" style={{ minWidth: this.props.width }}>
         <ul>
           {elements.map(({ elementType, view }, index) => {
             return (

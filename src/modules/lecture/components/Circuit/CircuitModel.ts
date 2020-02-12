@@ -23,6 +23,8 @@ export class CircuitModel implements ICircuitModel {
 
   undo: Array<any> = [];
 
+  turn: Array<any> = [];
+
   getCircuit() {
     return this.circuit;
   }
@@ -36,6 +38,20 @@ export class CircuitModel implements ICircuitModel {
     this.undo.push({ ...circuit });
   }
 
+  popCircuit() {
+    const circuit = this.undo.pop();
+
+    this.turn.push(circuit);
+
+    return circuit;
+  }
+
+  turnCircuit() {
+    const circuit = this.turn.pop();
+
+    return circuit;
+  }
+
   /* Добавляем элемент в схему */
   eddElement(element: IElement) {
     const elementId = element.getId();
@@ -46,6 +62,25 @@ export class CircuitModel implements ICircuitModel {
     const circuit = { ...this.circuit, ...map };
 
     this.setCircuit(circuit);
+  }
+
+  setTypeOutput(idOutput: string, type: string) {
+    const output = this.getOutput(idOutput);
+
+    output.setType(type);
+  }
+
+  getCountElementType(type: string): number {
+    let count: number = 0;
+
+    Object.keys(this.circuit).forEach(idElement => {
+      const element = this.circuit[idElement];
+
+      if (element.type === type) {
+        count++;
+      }
+    });
+    return count;
   }
 
   setCoordOutput(idOutput: string, coord: ICoord) {
@@ -61,8 +96,7 @@ export class CircuitModel implements ICircuitModel {
   getOutputs(): Array<any> {
     const outputs: any = [];
 
-    Object.keys(this.circuit).forEach((idElement: string) => {
-      const element = this.circuit[idElement];
+    Object.values(this.circuit).forEach(element => {
       const mapOutputs = element.outputs;
 
       Object.keys(mapOutputs).forEach(idOutput => {
@@ -81,17 +115,22 @@ export class CircuitModel implements ICircuitModel {
   getStringShape() {
     const connections: Array<string> = [];
 
-    Object.keys(this.circuit).forEach(idElement => {
-      const { type, params, outputs } = this.circuit[idElement];
+    Object.values(this.circuit).forEach(element1 => {
+      const { type, params, outputs } = element1;
 
-      Object.keys(outputs).forEach(idOutput => {
-        outputs[idOutput].connections.forEach((output: any) => {
-          const element = this.getElementByOutputId(output.id);
-          const connect = `${type}${JSON.stringify(params)}.${idOutput}=${
-            element.type
-          }${JSON.stringify(element.params)}.${output.id}`;
+      Object.values(outputs).forEach((output1: any) => {
+        output1.connections.forEach((output2: any) => {
+          const element2 = this.getElementByOutputId(output2.id);
 
-          connections.push(connect);
+          if (element2) {
+            const part1 = `${type}${JSON.stringify(params)}.${output1.type}`;
+            const part2 = `${element2.type}${JSON.stringify(element2.params)}.${
+              output2.type
+            }`;
+            const connect = `${part1}=${part2}`;
+
+            connections.push(connect);
+          }
         });
       });
     });
@@ -122,7 +161,12 @@ export class CircuitModel implements ICircuitModel {
       output1.connections.forEach((output2: any) => {
         const endCoord = output2.coord;
 
-        connections.push({ startCoord, endCoord });
+        if (
+          this.getElementByOutputId(output1.id) &&
+          this.getElementByOutputId(output2.id)
+        ) {
+          connections.push({ startCoord, endCoord });
+        }
       });
     });
 
@@ -130,19 +174,19 @@ export class CircuitModel implements ICircuitModel {
   }
 
   getElementByOutputId(idOutput: string): any {
-    let element = {};
+    let elementSearch = null;
 
-    Object.keys(this.circuit).forEach(idElement => {
-      const { outputs } = this.circuit[idElement];
+    Object.values(this.circuit).forEach(element => {
+      const { outputs } = element;
 
-      Object.keys(outputs).forEach(idOutputSearch => {
-        if (idOutputSearch === idOutput) {
-          element = this.circuit[idElement];
+      Object.values(outputs).forEach((output: any) => {
+        if (output.id === idOutput) {
+          elementSearch = element;
         }
       });
     });
 
-    return element;
+    return elementSearch;
   }
 
   getElementById(idElement: string) {
@@ -152,11 +196,9 @@ export class CircuitModel implements ICircuitModel {
   getOutput(id: string) {
     let output: any = null;
 
-    Object.keys(this.circuit).forEach(idElement => {
-      const element = this.circuit[idElement];
-
-      if (element.outputs[id]) {
-        output = element.outputs[id];
+    Object.values(this.circuit).forEach(({ outputs }) => {
+      if (outputs[id]) {
+        output = outputs[id];
       }
     });
 
