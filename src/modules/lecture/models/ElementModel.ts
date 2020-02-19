@@ -2,15 +2,23 @@ import { ICoord } from "../../../common/interfaces";
 import { generateUniqueId } from "../../../common/utils";
 
 export class ElementModel {
-    private id: string = generateUniqueId();
+  id: string = generateUniqueId();
 
-    private coord: ICoord = { x: 0, y: 0 };
+  name: string = "";
 
-    public setCoord(coord: ICoord) {
-        this.coord = coord;
-    }
+  coord: ICoord = { x: 0, y: 0 };
 
-    public getId(id: string) {
-        return this.id;
-    }
+  params: { [key: string]: any } = {};
+
+  setCoord(coord: ICoord) {
+    this.coord = coord;
+  }
+
+  setParam(name: string, value: number) {
+    this.params[name] = value;
+  }
+
+  setName(name: string) {
+    this.name = name;
+  }
 }

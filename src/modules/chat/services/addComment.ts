@@ -1,12 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "../../../constants";
 import { IComment } from "../../../common/interfaces";
-import { Dispatch } from "redux";
+// import { addComment as addCommentTestservice } from "../../../tests/services";
 
-export const addComment = (idLecture: number, comment: IComment): any => (
-  dispatch: Dispatch
-) => {
-  axios.post(`${BASE_URL}comment/${idLecture}`, comment).then(lecture => {
-    dispatch({ type: "ADD_LECTURE", lecture });
-  });
+export const addComment = (comment: IComment): any => {
+  return axios.post(`${BASE_URL}comments`, comment);
+  // return addCommentTestservice(comment);
 };

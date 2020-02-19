@@ -26,7 +26,7 @@ export class Menu extends Component<Props, State> {
 
   render() {
     return (
-      <div className={cn("lecture-menu")}>
+      <div className={cn("menu")}>
         {MENU_ITEMS.map(({ value, img }, index) => {
           const isSelect = this.state.value === value;
 

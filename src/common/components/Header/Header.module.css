@@ -25,6 +25,27 @@
 }
 
 .signIn {
+    white-space: nowrap;
     padding-right: 15px;
-    margin: 0;
+    margin: 0 5px 0 0;
+}
+
+.signIn::after {
+    content: "";
+    position: absolute;
+    top: 46%;
+    right: 10px;
+    display: block;
+    width: 0;
+    height: 0;
+    border-width: 6px 4px 0;
+    border-style: solid;
+    border-color: #8f8f9b transparent transparent;
+}
+
+.logoImg {
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+    background-color: #8f8f9b;
 }

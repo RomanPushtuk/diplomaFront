@@ -41,8 +41,6 @@ export class CircuitModel implements ICircuitModel {
   popCircuit() {
     const circuit = this.undo.pop();
 
-    this.turn.push(circuit);
-
     return circuit;
   }
 
@@ -54,7 +52,7 @@ export class CircuitModel implements ICircuitModel {
 
   /* Добавляем элемент в схему */
   eddElement(element: IElement) {
-    const elementId = element.getId();
+    const elementId = element.id;
     const map: { [k: string]: any } = {};
 
     map[elementId] = element;

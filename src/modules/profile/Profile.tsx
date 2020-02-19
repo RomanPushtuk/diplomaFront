@@ -2,18 +2,19 @@ import React, { Component } from "react";
 import { getByLocalStorage } from "../../common/servises";
 
 interface Props {
-  getUserInfo: (token: any) => void;
+  getUserInfo: () => void;
+  history: any;
 }
 
 export class Profile extends Component<any, any> {
   componentDidMount() {
     const { getUserInfo, history } = this.props;
 
-    getByLocalStorage("TOKEN")
-      .then((token: any) => {
-        getUserInfo(token);
+    getUserInfo()
+      .then((userData: any) => {
+        const { userName, progress } = userData;
       })
-      .catch(reason => history.push("/login"));
+      .catch(history.push("/login"));
   }
 
   render() {

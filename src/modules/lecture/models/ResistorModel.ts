@@ -11,12 +11,4 @@ export class ResistorModel extends ElementModel {
   params: { [key: string]: any } = {
     resist: 0
   };
-
-  setParam(name: string, value: number) {
-    this.params[name] = value;
-  }
-
-  setName(name: string) {
-    this.name = name;
-  }
 }

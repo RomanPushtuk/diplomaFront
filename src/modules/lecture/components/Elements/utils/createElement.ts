@@ -1,13 +1,19 @@
-import { ICoord } from "../../../../../common/interfaces";
-import { ELEMENTS } from "../../../../../constants";
+import {
+  Resistor,
+  Transistor,
+  Battery,
+  Capacitor,
+  Inductance
+} from "../../../../draw";
 
-export function createElement(
-  id: string,
-  type: string,
-  coord: ICoord,
-  outputs: Object
-): any {
-  const constructorElement = ELEMENTS[type];
+export function createElement(type: string): any {
+  const ELEMENTS: { [k: string]: any } = {
+    resistor: Resistor,
+    transistor: Transistor,
+    battery: Battery,
+    capacitor: Capacitor,
+    inductance: Inductance
+  };
 
-  return constructorElement(id, coord, outputs);
+  return ELEMENTS[type];
 }

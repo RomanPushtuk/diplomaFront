@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Dispatch } from "react";
-import { getLecture } from "./services";
+import { getLecture } from "./actions";
 import { LecturePure } from "./LecturePure";
 
 interface DispatchProps {

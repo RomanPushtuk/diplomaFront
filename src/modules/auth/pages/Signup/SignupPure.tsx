@@ -13,6 +13,7 @@ interface Props {
 }
 
 interface State {
+  isPending: boolean;
   userName: string;
   email: string;
   password: string;
@@ -23,6 +24,7 @@ interface State {
 
 export class SignupPure extends Component<Props, State> {
   state = {
+    isPending: false,
     userName: "",
     email: "",
     password: "",
@@ -35,12 +37,15 @@ export class SignupPure extends Component<Props, State> {
     const { signUp, history } = this.props;
     const { userName, email, password } = this.state;
 
+    this.setState({ isPending: true });
+
     signUp({ userName, email, password })
       .then(() => {
         history.goBack();
+        this.setState({ isPending: false });
       })
       .catch((err: any) => {
-        console.log(err.message);
+        this.setState({ error: err.message, isPending: false });
       });
   };
 
@@ -83,160 +88,169 @@ export class SignupPure extends Component<Props, State> {
             <Row className="position-relative">
               <Col lg={4} className="cover-my-30 order-2">
                 <div className="cover-user-img d-flex align-items-center">
-                  <Row>
-                    <Col>
-                      <div className="login_page">
-                        <div className="text-center">
-                          <h4 className="mb-4">Signup</h4>
-                        </div>
-                        <form className="login-form">
-                          <Row>
-                            <Col md={12}>
-                              <div className="form-group position-relative">
-                                <label>
-                                  User Name{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <i className="mdi mdi-account ml-3 icons" />
-                                <input
-                                  onChange={this.handleInputUserName}
-                                  type="text"
-                                  className="form-control pl-5"
-                                  placeholder="User Name"
-                                  name="s"
-                                />
-                              </div>
-                            </Col>
-
-                            <Col md={12}>
-                              <div className="form-group position-relative">
-                                <label>
-                                  Your Email{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <i className="mdi mdi-account ml-3 icons" />
-                                <input
-                                  onChange={this.handleInputEmail}
-                                  type="email"
-                                  className="form-control pl-5"
-                                  placeholder="Email"
-                                  name="email"
-                                />
-                              </div>
-                            </Col>
-
-                            <Col md={12}>
-                              <div className="form-group position-relative">
-                                <label>
-                                  Password{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <i className="mdi mdi-key ml-3 icons" />
-                                <input
-                                  onChange={this.handleInputPassword}
-                                  type="password"
-                                  className="form-control pl-5"
-                                  placeholder="Password"
-                                />
-                              </div>
-                            </Col>
-
-                            <Col md={12}>
-                              <div className="form-group position-relative">
-                                <label>
-                                  Confirm Password{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <i className="mdi mdi-key ml-3 icons" />
-                                <input
-                                  onChange={this.handleInputConfirmPassword}
-                                  type="password"
-                                  className="form-control pl-5"
-                                  placeholder="Confirm Password"
-                                />
-                              </div>
-                            </Col>
-
-                            <Col md={12}>
-                              <div className="form-group">
-                                <div className="custom-control custom-checkbox">
-                                  <input
-                                    onChange={this.handleCheckbox}
-                                    type="checkbox"
-                                    className="custom-control-input"
-                                    id="customCheck1"
-                                  />
-                                  <label
-                                    className="custom-control-label"
-                                    htmlFor="customCheck1"
-                                  >
-                                    I Accept{" "}
-                                    <Link to="#" className="text-primary">
-                                      Terms And Condition
-                                    </Link>
+                  {this.state.isPending ? null : (
+                    <Row>
+                      <Col>
+                        <div className="login_page">
+                          <div className="text-center">
+                            <h4 className="mb-4">Signup</h4>
+                          </div>
+                          <form className="login-form">
+                            <Row>
+                              <Col md={12}>
+                                <div className="form-group position-relative">
+                                  <label>
+                                    User Name{" "}
+                                    <span className="text-danger">*</span>
                                   </label>
+                                  <i className="mdi mdi-account ml-3 icons" />
+                                  <input
+                                    onChange={this.handleInputUserName}
+                                    type="text"
+                                    className="form-control pl-5"
+                                    placeholder="User Name"
+                                    name="s"
+                                  />
                                 </div>
-                              </div>
-                            </Col>
+                              </Col>
 
-                            <Col md={12}>
-                              <button
-                                type="button"
-                                className="btn btn-primary w-100"
-                                onClick={this.handleSignUp}
-                              >
-                                Register
-                              </button>
-                            </Col>
+                              <Col md={12}>
+                                <div className="form-group position-relative">
+                                  <label>
+                                    Your Email{" "}
+                                    <span className="text-danger">*</span>
+                                  </label>
+                                  <i className="mdi mdi-account ml-3 icons" />
+                                  <input
+                                    onChange={this.handleInputEmail}
+                                    type="email"
+                                    className="form-control pl-5"
+                                    placeholder="Email"
+                                    name="email"
+                                  />
+                                </div>
+                              </Col>
 
-                            <Col lg={12} className="mt-4 text-center">
-                              <h6>Or Signup With</h6>
-                              <ul className="list-unstyled social-icon mb-0 mt-3">
-                                <li className="list-inline-item">
-                                  <Link to="#" className="rounded mr-1">
-                                    <i
-                                      className="mdi mdi-facebook"
-                                      title="Facebook"
-                                    />
-                                  </Link>
-                                </li>
-                                <li className="list-inline-item">
-                                  <Link to="#" className="rounded mr-1">
-                                    <i
-                                      className="mdi mdi-google-plus"
-                                      title="Google"
-                                    />
-                                  </Link>
-                                </li>
-                                <li className="list-inline-item">
-                                  <Link to="#" className="rounded">
-                                    <i
-                                      className="mdi mdi-github-circle"
-                                      title="Github"
-                                    />
-                                  </Link>
-                                </li>
-                              </ul>
-                            </Col>
+                              <Col md={12}>
+                                <div className="form-group position-relative">
+                                  <label>
+                                    Password{" "}
+                                    <span className="text-danger">*</span>
+                                  </label>
+                                  <i className="mdi mdi-key ml-3 icons" />
+                                  <input
+                                    onChange={this.handleInputPassword}
+                                    type="password"
+                                    className="form-control pl-5"
+                                    placeholder="Password"
+                                  />
+                                </div>
+                              </Col>
 
-                            <div className="mx-auto">
-                              <p className="mb-0 mt-3">
-                                <small className="text-dark mr-2">
-                                  Already have an account ?
-                                </small>{" "}
-                                <Link
-                                  to="/login"
-                                  className="text-dark font-weight-bold"
+                              <Col md={12}>
+                                <div className="form-group position-relative">
+                                  <label>
+                                    Confirm Password{" "}
+                                    <span className="text-danger">*</span>
+                                  </label>
+                                  <i className="mdi mdi-key ml-3 icons" />
+                                  <input
+                                    onChange={this.handleInputConfirmPassword}
+                                    type="password"
+                                    className="form-control pl-5"
+                                    placeholder="Confirm Password"
+                                  />
+                                </div>
+                              </Col>
+
+                              <Col md={12}>
+                                <div className="form-group">
+                                  <div className="custom-control custom-checkbox">
+                                    <input
+                                      onChange={this.handleCheckbox}
+                                      type="checkbox"
+                                      className="custom-control-input"
+                                      id="customCheck1"
+                                    />
+                                    <label
+                                      className="custom-control-label"
+                                      htmlFor="customCheck1"
+                                    >
+                                      I Accept{" "}
+                                      <Link to="#" className="text-primary">
+                                        Terms And Condition
+                                      </Link>
+                                    </label>
+                                  </div>
+                                </div>
+                              </Col>
+                              <Col lg={12} className="mb-0">
+                                <h4 className="text-danger">
+                                  {this.state.error
+                                    ? "Ошибка соединения"
+                                    : null}
+                                </h4>
+                              </Col>
+
+                              <Col md={12}>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary w-100"
+                                  onClick={this.handleSignUp}
                                 >
-                                  Sign in
-                                </Link>
-                              </p>
-                            </div>
-                          </Row>
-                        </form>
-                      </div>
-                    </Col>
-                  </Row>
+                                  Register
+                                </button>
+                              </Col>
+
+                              <Col lg={12} className="mt-4 text-center">
+                                <h6>Or Signup With</h6>
+                                <ul className="list-unstyled social-icon mb-0 mt-3">
+                                  <li className="list-inline-item">
+                                    <Link to="#" className="rounded mr-1">
+                                      <i
+                                        className="mdi mdi-facebook"
+                                        title="Facebook"
+                                      />
+                                    </Link>
+                                  </li>
+                                  <li className="list-inline-item">
+                                    <Link to="#" className="rounded mr-1">
+                                      <i
+                                        className="mdi mdi-google-plus"
+                                        title="Google"
+                                      />
+                                    </Link>
+                                  </li>
+                                  <li className="list-inline-item">
+                                    <Link to="#" className="rounded">
+                                      <i
+                                        className="mdi mdi-github-circle"
+                                        title="Github"
+                                      />
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </Col>
+
+                              <div className="mx-auto">
+                                <p className="mb-0 mt-3">
+                                  <small className="text-dark mr-2">
+                                    Already have an account ?
+                                  </small>{" "}
+                                  <Link
+                                    to="/login"
+                                    className="text-dark font-weight-bold"
+                                  >
+                                    Sign in
+                                  </Link>
+                                </p>
+                              </div>
+                            </Row>
+                          </form>
+                        </div>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
               </Col>
               <Col

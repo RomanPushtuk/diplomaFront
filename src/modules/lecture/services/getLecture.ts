@@ -1,9 +1,8 @@
 import axios from "axios";
-import { Dispatch } from "redux";
 import { BASE_URL } from "../../../constants";
+// import { getLecture as getLectureTestService } from "../../../tests/services";
 
-export const getLecture = (idLecture: number) => (dispatch: Dispatch) => {
-  axios.get(`${BASE_URL}lecture/${idLecture}`).then(lecture => {
-    dispatch({ type: "ADD_LECTURE", lecture });
-  });
+export const getLecture = (idLecture: number) => {
+  return axios.get(`${BASE_URL}lecture/${idLecture}`);
+  // return getLectureTestService(idLecture);
 };

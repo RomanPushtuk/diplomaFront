@@ -16,6 +16,10 @@ const elements = [
   {
     elementType: "transistor",
     view: "Transistor"
+  },
+  {
+    elementType: "battery",
+    view: "Battery"
   }
 ];
 

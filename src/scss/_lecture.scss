@@ -5,17 +5,10 @@ $height-draw-area: 600px;
 
   .icon-img {
     height: 28px;
-  }
-
-  .lecture-menu {
-    width: 70px;
-    border-right: 1px solid #dee2e6;
-
-    .menu-item {
-      text-align: center;
-      margin: 8px 0;
-    }
-  }
+  }.menu-item {
+     text-align: center;
+     margin: 8px 0;
+   }
 
   .editor {
     flex-basis: 100%;

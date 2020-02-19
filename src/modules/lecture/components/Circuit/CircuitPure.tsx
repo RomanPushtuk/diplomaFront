@@ -77,13 +77,16 @@ export class CircuitPure extends PureComponent<Props, State> {
   handleDrop = (event: DragEvent<any>) => {
     const elementType = event.dataTransfer.getData("text");
     const element = factoryModels(elementType);
-    const coord = getCoord(event);
 
-    element.setCoord(coord);
-    const count = circuitModel.getCountElementType(elementType) + 1;
+    if (element) {
+      const coord = getCoord(event);
 
-    element.setName(`${elementType}${count}`);
-    this.eddElement(element);
+      element.setCoord(coord);
+      const count = circuitModel.getCountElementType(elementType) + 1;
+
+      element.setName(`${elementType}${count}`);
+      this.eddElement(element);
+    }
   };
 
   connectOutputs = (id: string) => {
@@ -157,6 +160,7 @@ export class CircuitPure extends PureComponent<Props, State> {
   undo = () => {
     const popCircuit = circuitModel.popCircuit();
 
+    circuitModel.turn.push(circuitModel.circuit);
     circuitModel.setCircuit(popCircuit);
     this.setState({ circuit: popCircuit });
   };
@@ -164,8 +168,11 @@ export class CircuitPure extends PureComponent<Props, State> {
   turn = () => {
     const turnCircuit = circuitModel.turnCircuit();
 
-    circuitModel.setCircuit(turnCircuit);
-    this.setState({ circuit: turnCircuit });
+    if (turnCircuit) {
+      circuitModel.setCircuit(turnCircuit);
+      circuitModel.undo.push(circuitModel.circuit);
+      this.setState({ circuit: turnCircuit });
+    }
   };
 
   /* Изменяем позиция на схеме */
@@ -178,13 +185,19 @@ export class CircuitPure extends PureComponent<Props, State> {
   };
 
   handlePullDrag = (event: MouseEvent<any>) => {
-    const x = event.clientX - 38;
-
     if (this.pullType === "form") {
-      this.setState({ widthForm: -x });
+      const x = event.clientX - 1530;
+
+      if (x > -350) {
+        this.setState({ widthForm: -x });
+      }
     }
     if (this.pullType === "elements") {
-      this.setState({ widthElements: x });
+      const x = event.clientX - 68;
+
+      if (x < 230) {
+        this.setState({ widthElements: x });
+      }
     }
   };
 

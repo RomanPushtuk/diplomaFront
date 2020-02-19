@@ -10,32 +10,37 @@ const initialState: ILecture = {
   comments: [
     {
       id: 1,
-      author: "Пуштук Роман",
-      text:
+      userName: "Пуштук Роман",
+      content:
         "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour",
-      date: "15th August, 2019 at 01:25 pm"
+      dateTime: "15th August, 2019 at 01:25 pm"
     },
     {
       id: 2,
-      author: "Пуштук Роман",
-      text:
+      userName: "Пуштук Роман",
+      content:
         "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour",
-      date: "15th August, 2019 at 01:25 pm"
+      dateTime: "15th August, 2019 at 01:25 pm"
     },
     {
       id: 3,
-      author: "Пуштук Роман",
-      text:
+      userName: "Пуштук Роман",
+      content:
         "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour",
-      date: "15th August, 2019 at 01:25 pm"
+      dateTime: "15th August, 2019 at 01:25 pm"
     }
   ]
 };
 
-export function lectureReducer(state = initialState, { type, section }: any) {
+export function lectureReducer(
+  state = initialState,
+  { type, lecture, comments }: any
+) {
   switch (type) {
     case "ADD_LECTURE":
-      return { ...section };
+      return { ...lecture };
+    case "ADD_COMMENTS":
+      return { ...state, comments: [...comments] };
     default:
       return state;
   }

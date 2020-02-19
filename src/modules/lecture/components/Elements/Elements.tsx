@@ -14,10 +14,13 @@ export class Elements extends Component<Props, any> {
 
     return Object.keys(circuit).map(key => {
       const { id, type, coord, outputs } = circuit[key];
-      const Element = createElement(id, type, coord, outputs);
+      const Element = createElement(type);
 
       return (
         <Element
+          id={id}
+          coord={coord}
+          outputs={outputs}
           key={id}
           startDragging={this.props.startDragging}
           startDrawingLine={this.props.startDrawingLine}

@@ -1,4 +1,4 @@
-import React, { Component, MouseEvent } from "react";
+import React, { Component } from "react";
 import classNames from "classnames/bind";
 import styles from "./Pull.module.css";
 

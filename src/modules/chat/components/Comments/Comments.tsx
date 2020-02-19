@@ -13,10 +13,15 @@ export class Comments extends Component<Props, any> {
           <h4 className="page-title pb-3">Комментарии :</h4>
           <ul className="media-list list-unstyled mb-0">
             {this.props.comments.map(comment => {
-              const { id, author, text, date } = comment;
+              const { id, userName, content, dateTime } = comment;
 
               return (
-                <Comment key={id} author={author} text={text} date={date} />
+                <Comment
+                  key={id}
+                  author={userName}
+                  text={content}
+                  date={dateTime}
+                />
               );
             })}
           </ul>

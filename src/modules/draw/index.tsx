@@ -1,9 +1,10 @@
 export {
   // Element,
-  // Capacitor,
-  // Inductance,
+  Capacitor,
+  Inductance,
   Resistor,
-  // Transistor,
+  Transistor,
+  Battery,
   Line,
   Rect
 } from "./components";
