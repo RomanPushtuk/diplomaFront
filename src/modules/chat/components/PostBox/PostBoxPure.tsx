@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { Row, Col } from "reactstrap";
 
 interface Props {
-  addComment: (idLecture: number, comment: any) => void;
+  addComment: ( comment: any) => void;
 }
 
 interface State {
@@ -26,7 +26,7 @@ export class PostBoxPure extends Component<Props, State> {
     const password = Cookies.get("password");
 
     if (login && password) {
-      this.props.addComment(1, {
+      this.props.addComment({
         userId: 1,
         dateTime: "Новая дата",
         content: this.state.text,

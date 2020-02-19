@@ -4,27 +4,27 @@ const initialState: ILecture = {
   id: 0,
   title: "Лекция1",
   description: "Описание лекции1",
-  lectureContent: "Текск для лекции 1",
+  content: "Текск для лекции 1",
   tasks: ["Задача 1", "Задача 2"],
   solution: "{}",
   comments: [
     {
       id: 1,
-      userName: "Пуштук Роман",
+      userId: "Пуштук Роман",
       content:
         "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour",
       dateTime: "15th August, 2019 at 01:25 pm"
     },
     {
       id: 2,
-      userName: "Пуштук Роман",
+      userId: "Пуштук Роман",
       content:
         "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour",
       dateTime: "15th August, 2019 at 01:25 pm"
     },
     {
       id: 3,
-      userName: "Пуштук Роман",
+      userId: "Пуштук Роман",
       content:
         "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour",
       dateTime: "15th August, 2019 at 01:25 pm"

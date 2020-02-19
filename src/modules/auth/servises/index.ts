@@ -1,3 +1,3 @@
 export { getUserProfile } from "./getUserProfile";
 export { login } from "./login";
-export { signUp } from "./signUp";
+export { register } from "./register";

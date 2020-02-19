@@ -38,7 +38,7 @@ export class LecturePure extends Component<Props, State> {
     const {
       id,
       tasks,
-      lectureContent,
+      content,
       solution,
       comments
     } = this.props.lecture;
@@ -47,7 +47,7 @@ export class LecturePure extends Component<Props, State> {
       <div className="lecture">
         <Menu onSelect={this.handleSelect} />
         {modalContent === "editor" && <Editor answer={solution} />}
-        {modalContent === "lecture" && <Lecture text={lectureContent} />}
+        {modalContent === "lecture" && <Lecture text={content} />}
         {modalContent === "tasks" && <Tasks tasks={tasks} />}
         {modalContent === "chat" && <Chat idLecture={id} comments={comments} />}
       </div>

@@ -8,7 +8,7 @@ import { BackToHome } from "../../components";
 import user02 from "../../../../images/user/02.jpg";
 
 interface Props {
-  signUp: (data: any) => Promise<any>;
+  register: (data: any) => Promise<any>;
   history: any;
 }
 
@@ -34,14 +34,14 @@ export class SignupPure extends Component<Props, State> {
   };
 
   handleSignUp = () => {
-    const { signUp, history } = this.props;
+    const { register, history } = this.props;
     const { userName, email, password } = this.state;
 
     this.setState({ isPending: true });
 
-    signUp({ userName, email, password })
+    register({ userName, email, password })
       .then(() => {
-        history.goBack();
+        history.push("/");
         this.setState({ isPending: false });
       })
       .catch((err: any) => {
