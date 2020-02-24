@@ -1,1 +1,1 @@
-export { Login, Signup } from "./pages";
+export { Login, Register } from "./pages";

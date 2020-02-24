@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { register } from "../../actions";
-import { SignupPure } from "./SignupPure";
+import { RegisterPure } from "./RegisterPure";
 
 interface StateProps {}
 
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   register: (data: any) => dispatch(register(data))
 });
 
-export const Signup = connect<StateProps, DispatchProps, any>(
+export const Register = connect<StateProps, DispatchProps, any>(
   mapStateToProps,
   mapDispatchToProps
-)(SignupPure);
+)(RegisterPure);

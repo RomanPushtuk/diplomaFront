@@ -1,4 +1,4 @@
-import React, { Component, MouseEvent } from "react";
+import React, { Component, createRef, MouseEvent } from "react";
 import { ICoord } from "../../../../common/interfaces";
 import { createOutputs } from "../../utils";
 
@@ -18,10 +18,21 @@ export class Resistor extends Component<Props, any> {
     this.outputs = props.outputs;
   }
 
+  componentDidMount(): void {
+    const coord = {
+      x: this.resistorRef.current.getBBox().width / 2,
+      y: this.resistorRef.current.getBBox().height / 2
+    };
+
+    console.log(coord);
+  }
+
   handlerMouseDown = (event: MouseEvent<any>) => {
     event.stopPropagation();
     this.props.startDragging(this.id);
   };
+
+  resistorRef: any = createRef();
 
   id: string;
 
@@ -33,61 +44,57 @@ export class Resistor extends Component<Props, any> {
     const [Output1, Output2] = createOutputs(this.outputs);
 
     return (
-      <g>
-        <svg x={x} y={y}>
-          <Output1
-            startDrawingLine={startDrawingLine}
-            connectOutputs={connectOutputs}
-            type="output1"
-            cx={13}
-            cy={10}
-            r={10}
-            fill="red"
-          />
-          <line
-            x1="13"
-            y1="0"
-            x2="13"
-            y2="20"
-            stroke="violet"
-            strokeWidth="5"
-          />
-          <rect
-            width="15"
-            height="30"
-            x="5"
-            y="20"
-            fill="none"
-            stroke="violet"
-            strokeWidth="5"
-            onMouseDown={this.handlerMouseDown}
-          />
-          <line
-            x1="13"
-            y1="50"
-            x2="13"
-            y2="70"
-            stroke="violet"
-            strokeWidth="5"
-          />
-          {/*<rect*/}
-          {/*  width={25}*/}
-          {/*  height={15}*/}
-          {/*  y={20}*/}
-          {/*  fill="#40E0D0"*/}
-          {/*  onMouseDown={this.handlerMouseDown}*/}
-          {/*/>*/}
-          <Output2
-            startDrawingLine={startDrawingLine}
-            connectOutputs={connectOutputs}
-            type="output2"
-            cx={13}
-            cy={45}
-            r={10}
-            fill="red"
-          />
+      <g onMouseDown={this.handlerMouseDown}>
+        <svg
+          x={x}
+          y={y}
+          onMouseDown={this.handlerMouseDown}
+          ref={this.resistorRef}
+        >
+          <g>
+            <line
+              x1="13"
+              y1="0"
+              x2="13"
+              y2="20"
+              stroke="#00bfff"
+              strokeWidth="6"
+            />
+            <rect
+              width="15"
+              height="30"
+              x="5"
+              y="20"
+              fill="#3c4858"
+              stroke="#00bfff"
+              strokeWidth="6"
+            />
+            <line
+              x1="13"
+              y1="50"
+              x2="13"
+              y2="70"
+              stroke="#00bfff"
+              strokeWidth="6"
+            />
+            <Output1
+              startDrawingLine={startDrawingLine}
+              connectOutputs={connectOutputs}
+              type="output1"
+              cx={13}
+              cy={3}
+              fill="red"
+            />
+            <Output2
+              startDrawingLine={startDrawingLine}
+              connectOutputs={connectOutputs}
+              type="output2"
+              cx={13}
+              cy={67}
+              fill="red"
+            />
+          </g>
         </svg>
-        s
       </g>
     );
   }

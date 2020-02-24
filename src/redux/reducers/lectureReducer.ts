@@ -1,12 +1,13 @@
 import { ILecture } from "../../common/interfaces";
 
 const initialState: ILecture = {
-  id: 0,
+  id: 1,
   title: "Лекция1",
   description: "Описание лекции1",
   content: "Текск для лекции 1",
   tasks: ["Задача 1", "Задача 2"],
-  solution: "{}",
+  solution:
+    '["resistor{\\"resist\\":\\"100\\"}.output1=battery{\\"voltage\\":4.5}.output1","resistor{\\"resist\\":\\"100\\"}.output2=resistor{\\"resist\\":\\"200\\"}.output1","resistor{\\"resist\\":\\"200\\"}.output1=resistor{\\"resist\\":\\"100\\"}.output2","resistor{\\"resist\\":\\"200\\"}.output2=battery{\\"voltage\\":4.5}.output2","battery{\\"voltage\\":4.5}.output1=resistor{\\"resist\\":\\"100\\"}.output1","battery{\\"voltage\\":4.5}.output2=resistor{\\"resist\\":\\"200\\"}.output2"]',
   comments: [
     {
       id: 1,

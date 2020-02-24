@@ -1,5 +1,6 @@
 .menu {
     min-width: 70px;
     max-width: 70px;
+    height: calc(100vh - 55px);
     border-right: 1px solid #dee2e6;
 }

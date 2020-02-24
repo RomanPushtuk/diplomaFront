@@ -17,11 +17,14 @@ interface State {
   circuit: { [k: string]: any };
   widthForm: number;
   widthElements: number;
+  solution: Array<string>;
 }
 
 interface Props {
   addToForm: (idElement: string, name: string, params: any) => void;
+  lecture: any;
   circuit: any;
+  history: any;
 }
 
 const circuitModel = new CircuitModel();
@@ -32,7 +35,8 @@ export class CircuitPure extends PureComponent<Props, State> {
     endCoord: null,
     widthForm: 210,
     widthElements: 105,
-    circuit: {}
+    circuit: {},
+    solution: []
   };
 
   // Нужен для определения координат мыши
@@ -94,8 +98,11 @@ export class CircuitPure extends PureComponent<Props, State> {
     const output2 = circuitModel.getOutput(this.action.id);
 
     circuitModel.connectOutputs(output1, output2);
-    console.log(circuitModel.getStringShape());
-    this.setState({ circuit: circuitModel.getCircuit() });
+    // console.log(JSON.stringify(circuitModel.getStringShape()));
+    this.setState({
+      circuit: circuitModel.getCircuit(),
+      solution: circuitModel.getStringShape()
+    });
   };
 
   /* Начинаем перетаскивание элемента и добавляем информацию об элементе в форму */
@@ -162,7 +169,10 @@ export class CircuitPure extends PureComponent<Props, State> {
 
     circuitModel.turn.push(circuitModel.circuit);
     circuitModel.setCircuit(popCircuit);
-    this.setState({ circuit: popCircuit });
+    this.setState({
+      circuit: popCircuit,
+      solution: circuitModel.getStringShape()
+    });
   };
 
   turn = () => {
@@ -209,7 +219,20 @@ export class CircuitPure extends PureComponent<Props, State> {
     this.pullType = type;
   };
 
-  pullType: string = "";
+  checkSolution(userSolution: Array<string>, trueSolution: Array<string>) {
+    const arr1 = userSolution.sort();
+    const arr2 = trueSolution.sort();
+
+    return JSON.stringify(arr1) === JSON.stringify(arr2);
+  }
+
+  handleChangeValue = () => {
+    this.setState({
+      solution: circuitModel.getStringShape()
+    });
+  };
+
+  pullType = "";
 
   action: any = null;
 
@@ -221,11 +244,17 @@ export class CircuitPure extends PureComponent<Props, State> {
       endCoord,
       widthForm,
       widthElements,
-      circuit
+      circuit,
+      solution: userSolution
     } = this.state;
+
+    const { solution: trueSolution } = this.props.lecture;
 
     const isConnecting = !!(this.action && this.action.type === "CONNECTING");
     const isSelecting = !!(this.action && this.action.type === "SELECTING");
+
+    const isSolved = this.checkSolution(userSolution, JSON.parse(trueSolution));
+    console.log(isSolved);
 
     return (
       <div>
@@ -252,6 +281,7 @@ export class CircuitPure extends PureComponent<Props, State> {
             {isSelecting && (
               <Rect startCoord={startCoord} endCoord={endCoord} />
             )}
+            <Lines connects={circuitModel.getConnections()} />
             {!!circuit && (
               <Elements
                 circuit={circuit}
@@ -260,12 +290,15 @@ export class CircuitPure extends PureComponent<Props, State> {
                 connectOutputs={this.connectOutputs}
               />
             )}
-            <Lines connects={circuitModel.getConnections()} />
           </svg>
           <Pull type="form" puller={this.startPull} />
-          <Form width={widthForm} />
+          <Form width={widthForm} onChange={this.handleChangeValue} />
         </div>
-        <BottomControl isSolved />
+        <BottomControl
+          history={this.props.history}
+          currentIdLecture={this.props.lecture.id}
+          isSolved={isSolved}
+        />
       </div>
     );
   }

@@ -9,7 +9,9 @@ interface DispatchProps {
   addToForm: (idElement: string, name: string, params: any) => any;
 }
 
-const mapStateToProps = (state: any): StateProps => ({});
+const mapStateToProps = (state: any): StateProps => ({
+  lecture: state.lecture
+});
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   addToForm: (idElement: string, name: string, params: any) =>

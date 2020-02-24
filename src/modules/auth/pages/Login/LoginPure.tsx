@@ -44,7 +44,7 @@ export class LoginPure extends Component<Props, State> {
     login({ login: email, password })
       .then(() => {
         history.push("/");
-        onAuthorized(true);
+        // onAuthorized(true);
         this.setState({ isPending: false });
       })
       .catch((err: any) => {
@@ -168,7 +168,7 @@ export class LoginPure extends Component<Props, State> {
                                     Don't have an account ?
                                   </small>{" "}
                                   <Link
-                                    to="/signup"
+                                    to="/Register"
                                     className="text-dark font-weight-bold"
                                   >
                                     Sign Up

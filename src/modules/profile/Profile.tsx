@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getByLocalStorage } from "../../common/servises";
+import Cookies from "js-cookie";
 
 interface Props {
   getUserInfo: () => void;
@@ -8,13 +9,16 @@ interface Props {
 
 export class Profile extends Component<any, any> {
   componentDidMount() {
-    const { getUserInfo, history } = this.props;
+    const login = Cookies.get("login");
+    const password = Cookies.get("password");
 
-    getUserInfo()
-      .then((userData: any) => {
-        const { userName, progress } = userData;
-      })
-      .catch(history.push("/login"));
+    if (login && password) {
+      getByLocalStorage("THEMES_PROGRESS").then(themesProgress => {
+        console.log(themesProgress);
+      });
+    } else {
+      this.props.history.push("/login");
+    }
   }
 
   render() {

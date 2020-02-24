@@ -1,8 +1,8 @@
 const path = require('path');
 
 module.exports = {
-    parser: 'babel-eslint',
-    extends: ['airbnb','plugin:prettier/recommended', 'prettier/react'],
+    parser: '@typescript-eslint/parser',
+    extends: ['airbnb','plugin:prettier/recommended', 'prettier/react', 'plugin:@typescript-eslint/recommended'],
     parserOptions: {
         ecmaFeatures: {
             legacyDecorators: true,

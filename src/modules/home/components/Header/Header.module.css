@@ -1,0 +1,30 @@
+.header {
+    padding: 100px 0 170px;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.margin {
+    display: inline;
+    margin: 10px;
+}
+
+.heading {
+
+}
+
+.text-primary {
+
+}
+
+.description {
+
+}
+
+.buttons:first-child {
+    margin-right: 15px;
+}

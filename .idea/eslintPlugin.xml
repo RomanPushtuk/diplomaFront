@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ESLintProjectComponent">
+    <option name="builtinRulesPath" value="node_modules\eslint\lib\rules" />
+    <option name="eslintExecutable" value="D:\Diploma\DiplomaModules\node_modules\.bin\eslint.cmd" />
+    <option name="nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+  </component>
+</project>

@@ -1,50 +1,18 @@
-import React, { Component } from "react";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { BottomControlPure } from "./BottomControlPure";
+import { getLecture } from "../../actions";
 
-import start from "../../img/forward-continue.svg";
-import pause from "../../img/pause.svg";
-
-interface Props {
-  isSolved: boolean;
+interface DispatchProps {
+  getLecture: (id: number) => void;
 }
 
-export class BottomControl extends Component<Props> {
-  handleStartSheme = () => {};
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  // @ts-ignore
+  getLecture: (id: number) => dispatch(getLecture(id))
+});
 
-  handlePauseSheme = () => {};
-
-  render() {
-    return (
-      <div className="control">
-        <div className="section">
-          <div>
-            <span>
-              <img
-                className="icon-img"
-                alt="back-arrow"
-                onClick={this.handleStartSheme}
-                src={start}
-              />
-            </span>
-          </div>
-          <div>
-            <span>
-              <img
-                className="icon-img"
-                alt="next-arrow"
-                onClick={this.handlePauseSheme}
-                src={pause}
-              />
-            </span>
-          </div>
-        </div>
-        <div>
-          {this.props.isSolved && (
-            <a className="badge badge-success mr-2 mb-2" href="/components">
-              Success
-            </a>
-          )}
-        </div>
-      </div>
-    );
-  }
-}
+export const BottomControl = connect<any, DispatchProps, any>(
+  undefined,
+  mapDispatchToProps
+)(BottomControlPure);

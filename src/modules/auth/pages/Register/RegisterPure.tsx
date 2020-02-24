@@ -22,7 +22,7 @@ interface State {
   error: string;
 }
 
-export class SignupPure extends Component<Props, State> {
+export class RegisterPure extends Component<Props, State> {
   state = {
     isPending: false,
     userName: "",
@@ -93,7 +93,7 @@ export class SignupPure extends Component<Props, State> {
                       <Col>
                         <div className="login_page">
                           <div className="text-center">
-                            <h4 className="mb-4">Signup</h4>
+                            <h4 className="mb-4">Register</h4>
                           </div>
                           <form className="login-form">
                             <Row>

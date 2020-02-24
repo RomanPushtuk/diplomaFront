@@ -1,0 +1,39 @@
+.submenu {
+    position: absolute;
+    right: 5px;
+    top: 70px;
+    margin: 0;
+    padding: 15px 0;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    width: 180px;
+    padding: 10px 20px;
+    list-style: none;
+    font-size: 16px;
+}
+
+.item:first-child::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 25px;
+    box-sizing: border-box;
+    border: 7px solid #495057;
+    border-color: transparent transparent #ffffff #ffffff;
+    transform-origin: 0 0;
+    transform: rotate(135deg);
+    box-shadow: -2px 2px 2px -1px rgba(0, 0, 0, 0.15);
+}

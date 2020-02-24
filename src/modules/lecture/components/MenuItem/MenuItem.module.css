@@ -12,7 +12,11 @@
     height: 28px;
 }
 
-.item:hover {
+.hover {
     cursor: pointer;
     background-color: #f2f2f2;
+}
+
+.down {
+    background-color: #dedede;
 }

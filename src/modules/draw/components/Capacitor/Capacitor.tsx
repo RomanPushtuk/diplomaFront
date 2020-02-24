@@ -34,34 +34,56 @@ export class Capacitor extends Component<Props, any> {
 
     return (
       <g>
-        <svg x={x} y={y}>
+        <svg x={x} y={y} onMouseDown={this.handlerMouseDown}>
+          <line
+            x1="12"
+            y1="0"
+            x2="12"
+            y2="30"
+            strokeWidth="5"
+            stroke="#00bfff"
+          />
+          <line
+            x1="12"
+            y1="40"
+            x2="12"
+            y2="70"
+            strokeWidth="5"
+            stroke="#00bfff"
+          />
+          <line
+            x1="0"
+            y1="30"
+            x2="25"
+            y2="30"
+            strokeWidth="5"
+            stroke="#00bfff"
+          />
+          <line
+            x1="0"
+            y1="40"
+            x2="25"
+            y2="40"
+            strokeWidth="5"
+            stroke="#00bfff"
+          />
           <Output1
             startDrawingLine={startDrawingLine}
             connectOutputs={connectOutputs}
             type="output1"
-            cx={13}
-            cy={10}
-            r={10}
-            fill="skyblue"
-          />
-          <rect
-            width={25}
-            height={15}
-            y={20}
-            fill="#40E0D0"
-            onMouseDown={this.handlerMouseDown}
+            cx={12}
+            cy={4}
+            fill="red"
           />
           <Output2
             startDrawingLine={startDrawingLine}
             connectOutputs={connectOutputs}
             type="output2"
-            cx={13}
-            cy={45}
-            r={10}
-            fill="skyblue"
+            cx={12}
+            cy={66}
+            fill="red"
           />
         </svg>
-        s
       </g>
     );
   }

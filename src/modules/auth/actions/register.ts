@@ -6,7 +6,7 @@ import { register as registerService } from "../servises";
 export const register = (data: any): any => (dispatch: Dispatch) => {
   return registerService(data)
     .then(({ data }: any) => {
-      console.log("Зарегалісь");
+      console.log("Зарегались");
       console.log(data);
       Cookies.set("login", data.email);
       Cookies.set("password", data.password);

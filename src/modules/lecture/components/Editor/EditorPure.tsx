@@ -28,6 +28,7 @@ const circiutModel = new CircuitModel();
 interface Props {
   answer: string;
   userAnswer: Array<string>;
+  history: any;
 }
 
 interface State {
@@ -48,7 +49,7 @@ export class EditorPure extends Component<Props, State> {
   render() {
     return (
       <div className="editor">
-        <Circuit onChange={this.handleChange} />
+        <Circuit history={this.props.history} onChange={this.handleChange} />
       </div>
     );
   }

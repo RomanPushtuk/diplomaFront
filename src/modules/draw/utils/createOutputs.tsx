@@ -33,7 +33,7 @@ export function createOutputs(outputs: { [k: string]: Array<string> }): any {
       outputRef = createRef<any>();
 
       render() {
-        const { cx, cy, r, fill } = this.props;
+        const { cx, cy, fill } = this.props;
 
         return (
           <g
@@ -41,7 +41,7 @@ export function createOutputs(outputs: { [k: string]: Array<string> }): any {
             onMouseDown={this.handleMouseDown}
             onMouseUp={this.handleMouseUp}
           >
-            <circle cx={cx} cy={cy} r={r} fill={fill} />
+            <circle cx={cx} cy={cy} r={3} fill={fill} />
           </g>
         );
       }
